@@ -6,11 +6,11 @@ Use these words only after you understand the code and can explain the model, ba
 
 **Virtual Driver's Test — Braking-Risk Benchmark** | Python, machine learning, model evaluation, simulation | GitHub · Demo
 
-- Built a reproducible evaluation pipeline that generates 6,000 synthetic braking scenarios, trains a logistic regression model, and compares it with a fixed-rule baseline.
+- Built a reproducible evaluation pipeline that generates 5,400 synthetic braking scenarios, trains a logistic regression model, and compares it with a fixed-rule baseline.
 - Measured 97.1% accuracy and 27 missed hazards on 1,200 held-out typical scenarios; stress-tested slippery-road / long-reaction cases and analyzed the false-negative versus false-alarm tradeoff.
 - Published an interactive demo that exposes model predictions, baseline decisions, and the physics-derived test label for user-selected scenarios.
 
-**Be precise:** The 6,000 scenarios are 3,000 training + 1,200 typical test + 1,200 stress test. The 97.1% figure is on synthetic typical test data, not real driving data. If your resume has room for two bullets, keep the first two.
+**Be precise:** The 5,400 scenarios are 3,000 training + 1,200 typical test + 1,200 stress test. The 97.1% figure is on synthetic typical test data, not real driving data. If your resume has room for two bullets, keep the first two.
 
 ## Waymo-targeted variant
 

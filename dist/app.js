@@ -47,18 +47,17 @@ function card(title, tag, data) {
   return `<article class="card"><div class="tag">${tag}</div><h3>${title}</h3><div class="stat-grid"><div class="stat"><strong class="model-color">${Math.round(data.model.accuracy * 1000) / 10}%</strong><span>model accuracy</span></div><div class="stat"><strong class="base-color">${Math.round(data.baseline.accuracy * 1000) / 10}%</strong><span>baseline accuracy</span></div><div class="stat"><strong>${data.model.false_negatives} / ${data.baseline.false_negatives}</strong><span>missed hazards: model / baseline</span></div></div></article>`;
 }
 
-async function start() {
+function start() {
   try {
-    const [modelResponse, resultsResponse] = await Promise.all([fetch("model.json"), fetch("results.json")]);
-    if (!modelResponse.ok || !resultsResponse.ok) throw new Error("Could not load benchmark files");
-    model = await modelResponse.json();
-    const results = await resultsResponse.json();
+    if (!window.BENCHMARK_DATA) throw new Error("Could not load benchmark data");
+    model = window.BENCHMARK_DATA.model;
+    const results = window.BENCHMARK_DATA.results;
     $("result-cards").innerHTML = card("Typical conditions", "1,200 HELD-OUT SCENARIOS", results.test) + card("Stress conditions", "1,200 HELD-OUT SCENARIOS", results.stress);
     $("result-note").textContent = `At the default 50% threshold, the model misses ${results.test.model.false_negatives} hazards on the typical set and ${results.stress.model.false_negatives} on the stress set. Lowering the threshold to 25% cuts those counts to ${results.test.conservative_model.false_negatives} and ${results.stress.conservative_model.false_negatives}, with more false alarms. See results.json for the full confusion matrices.`;
     inputs.forEach(id => $(id).addEventListener("input", update));
     update();
   } catch (error) {
-    $("model-call").textContent = "Could not load the model. Run the local web server described in README.md.";
+    $("model-call").textContent = "Could not load the model data. Run benchmark.py and reopen this page.";
     $("result-cards").textContent = error.message;
   }
 }

@@ -11,10 +11,9 @@ Requires Python 3.10+ and no third-party packages.
 ```bash
 python benchmark.py
 python -m unittest discover -v
-python -m http.server 8000 -d dist
 ```
 
-Open <http://localhost:8000>. On Windows, `py benchmark.py` works if `python` is not on PATH. The generated `dist/model.json` and `dist/results.json` are already committed so the demo works without retraining.
+Open `dist/index.html` in a browser. On Windows, `py benchmark.py` works if `python` is not on PATH. The generated `dist/data.js`, `dist/model.json`, and `dist/results.json` are already committed, so the demo also works by double-clicking `dist/index.html` without retraining or running a server.
 
 ## Results
 
@@ -48,6 +47,7 @@ The key metric is **false negatives**: hazardous scenarios called safe. Accuracy
 - `test_benchmark.py` — checks for label behavior, baseline assumptions, and metric shape
 - `dist/index.html`, `dist/style.css`, `dist/app.js` — static interactive demo
 - `dist/model.json`, `dist/results.json` — generated model and reproducible measurements
+- `dist/data.js` — the same generated data for the offline interactive demo
 - `career_copy.md` — resume and LinkedIn wording tied to the measured work
 
 ## What this demonstrates for the target internships

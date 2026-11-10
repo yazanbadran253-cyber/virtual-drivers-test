@@ -118,6 +118,10 @@ def main():
     dist.mkdir(exist_ok=True)
     (dist / "model.json").write_text(json.dumps(model, indent=2) + "\n", encoding="utf-8")
     (dist / "results.json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+    (dist / "data.js").write_text(
+        "window.BENCHMARK_DATA = " + json.dumps(dict(model=model, results=results)) + ";\n",
+        encoding="utf-8",
+    )
     print(json.dumps(results, indent=2))
 
 
