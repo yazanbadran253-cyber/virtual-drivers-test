@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reproducible, synthetic virtual driver's test for a toy braking-risk model.">
+  <title>Virtual Driver's Test · Braking Risk Benchmark</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#top"><span class="mark">V<span>·</span>D</span> VIRTUAL DRIVER'S TEST</a><a class="toplink" href="#method">How it works <span aria-hidden="true">↗</span></a></header>
+  <main id="top">
+    <section class="hero wrap">
+      <div class="eyebrow"><span class="pulse"></span> REPRODUCIBLE ML EVALUATION · SYNTHETIC DATA</div>
+      <h1>How reliably can a model <em>spot a braking hazard?</em></h1>
+      <p class="lede">A small virtual driver's test: generate road scenarios, compare a learned model with a fixed-rule baseline, and inspect the cases each one misses.</p>
+      <div class="hero-meta"><span>6,000 simulated scenarios</span><span>2 test conditions</span><span>1 explicit failure metric</span></div>
+    </section>
+
+    <section class="lab wrap" aria-labelledby="lab-title">
+      <div class="section-head"><div><span class="kicker">01 / INTERACTIVE TEST</span><h2 id="lab-title">Set the scene</h2></div><p>Move the controls to evaluate one scenario. The physics rule supplies the test label; the model predicts it.</p></div>
+      <div class="lab-grid">
+        <div class="controls">
+          <label for="speed">Vehicle speed <output id="speed-out">60 km/h</output></label><input id="speed" type="range" min="10" max="90" value="60">
+          <label for="distance">Obstacle distance <output id="distance-out">45 m</output></label><input id="distance" type="range" min="3" max="120" value="45">
+          <label for="friction">Road friction <output id="friction-out">0.55</output></label><input id="friction" type="range" min="20" max="90" value="55"><small>Lower = more slippery</small>
+          <label for="reaction">Reaction time <output id="reaction-out">1.2 s</output></label><input id="reaction" type="range" min="5" max="22" value="12">
+        </div>
+        <div class="result" aria-live="polite">
+          <div class="result-label">MODEL RISK SCORE</div><div class="score" id="score">—</div>
+          <div class="meter"><div id="meter-fill"></div></div>
+          <p id="model-call" class="call">Loading model…</p>
+          <div class="verdicts"><div><span>Physics test label</span><strong id="truth">—</strong></div><div><span>Fixed-rule baseline</span><strong id="baseline">—</strong></div><div><span>Stopping distance</span><strong id="stopping">—</strong></div></div>
+          <p class="fineprint">This is an educational, one-dimensional simulation. Its output must not guide real driving decisions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-band" id="results"><div class="wrap">
+      <div class="section-head"><div><span class="kicker">02 / HELD-OUT RESULTS</span><h2>Average accuracy hides misses.</h2></div><p>All numbers come from a fixed-seed run. The stress set combines slippery roads with slower reactions.</p></div>
+      <div class="result-cards" id="result-cards"><p>Loading evaluation…</p></div>
+      <p class="result-note" id="result-note"></p>
+    </div></section>
+
+    <section class="method wrap" id="method"><div class="section-head"><div><span class="kicker">03 / METHOD</span><h2>What the benchmark actually does</h2></div></div>
+      <div class="steps"><article><span>01</span><h3>Generate</h3><p>Draw speed, obstacle distance, road friction, and reaction time using a fixed random seed. A stopping-distance equation labels each scenario.</p></article><article><span>02</span><h3>Train</h3><p>Fit a logistic regression model on 3,000 scenarios. Compare it with a baseline that assumes a dry road and one-second reaction time.</p></article><article><span>03</span><h3>Stress-test</h3><p>Evaluate on unseen scenarios, then shift toward lower friction and longer reaction. Count false negatives: hazards the model calls safe.</p></article></div>
+      <div class="caveat"><strong>Scope:</strong> Synthetic one-dimensional braking only. It omits perception, steering, traffic, real sensor error, and safety certification. The trained model approximates a known physics rule; using the rule directly is preferable in a real system.</div>
+    </section>
+  </main>
+  <footer class="wrap"><span>VIRTUAL DRIVER'S TEST / EDUCATIONAL BENCHMARK</span><span>Python standard library · fixed seed 42 · reproducible results</span></footer>
+  <script src="app.js" defer></script>
+</body>
+</html>

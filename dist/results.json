@@ -1,0 +1,93 @@
+{
+  "seed": 42,
+  "train_count": 3000,
+  "test": {
+    "model": {
+      "count": 1200,
+      "accuracy": 0.9708,
+      "recall": 0.9293,
+      "false_negatives": 27,
+      "false_negative_rate": 0.0707,
+      "brier": 0.036,
+      "confusion": {
+        "tp": 355,
+        "tn": 810,
+        "fp": 8,
+        "fn": 27
+      }
+    },
+    "conservative_model": {
+      "count": 1200,
+      "accuracy": 0.9133,
+      "recall": 1.0,
+      "false_negatives": 0,
+      "false_negative_rate": 0.0,
+      "brier": 0.036,
+      "confusion": {
+        "tp": 382,
+        "tn": 714,
+        "fp": 104,
+        "fn": 0
+      }
+    },
+    "baseline": {
+      "count": 1200,
+      "accuracy": 0.915,
+      "recall": 0.7592,
+      "false_negatives": 92,
+      "false_negative_rate": 0.2408,
+      "brier": 0.085,
+      "confusion": {
+        "tp": 290,
+        "tn": 808,
+        "fp": 10,
+        "fn": 92
+      }
+    }
+  },
+  "stress": {
+    "model": {
+      "count": 1200,
+      "accuracy": 0.955,
+      "recall": 0.9122,
+      "false_negatives": 54,
+      "false_negative_rate": 0.0878,
+      "brier": 0.035,
+      "confusion": {
+        "tp": 561,
+        "tn": 585,
+        "fp": 0,
+        "fn": 54
+      }
+    },
+    "conservative_model": {
+      "count": 1200,
+      "accuracy": 0.955,
+      "recall": 1.0,
+      "false_negatives": 0,
+      "false_negative_rate": 0.0,
+      "brier": 0.035,
+      "confusion": {
+        "tp": 615,
+        "tn": 531,
+        "fp": 54,
+        "fn": 0
+      }
+    },
+    "baseline": {
+      "count": 1200,
+      "accuracy": 0.7517,
+      "recall": 0.5154,
+      "false_negatives": 298,
+      "false_negative_rate": 0.4846,
+      "brier": 0.2483,
+      "confusion": {
+        "tp": 317,
+        "tn": 585,
+        "fp": 0,
+        "fn": 298
+      }
+    }
+  },
+  "note": "Synthetic one-dimensional braking scenarios; not a real driving safety assessment."
+}
