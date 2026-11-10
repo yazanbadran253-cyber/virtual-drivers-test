@@ -1,5 +1,4 @@
 const $ = id => document.getElementById(id);
-const inputs = ["speed", "distance", "friction", "reaction"];
 let model;
 
 function scenario() {
@@ -25,40 +24,35 @@ function risk(row) {
 }
 
 function update() {
-  if (!model) return;
   const row = scenario();
   $("speed-out").textContent = `${row.speed} km/h`;
   $("distance-out").textContent = `${row.distance} m`;
   $("friction-out").textContent = row.friction.toFixed(2);
   $("reaction-out").textContent = `${row.reaction.toFixed(1)} s`;
   const score = risk(row);
-  const hazard = stoppingDistance(row) >= row.distance;
-  const baseline = stoppingDistance({...row, friction: 0.7, reaction: 1}) >= row.distance;
   $("score").textContent = `${Math.round(score * 100)}%`;
-  $("meter-fill").style.width = `${Math.round(score * 100)}%`;
-  $("meter-fill").style.background = score >= 0.5 ? "#efb77d" : "#6ce7bb";
-  $("model-call").textContent = score >= 0.5 ? "Model calls this a hazard" : "Model calls this safe";
-  $("truth").textContent = hazard ? "Hazard" : "Safe";
-  $("baseline").textContent = baseline ? "Hazard" : "Safe";
+  $("model-call").textContent = score >= 0.5 ? "Hazard" : "Safe";
+  $("baseline").textContent = stoppingDistance({...row, friction: 0.7, reaction: 1}) >= row.distance ? "Hazard" : "Safe";
+  $("truth").textContent = stoppingDistance(row) >= row.distance ? "Hazard" : "Safe";
   $("stopping").textContent = `${stoppingDistance(row).toFixed(1)} m`;
 }
 
-function card(title, tag, data) {
-  return `<article class="card"><div class="tag">${tag}</div><h3>${title}</h3><div class="stat-grid"><div class="stat"><strong class="model-color">${Math.round(data.model.accuracy * 1000) / 10}%</strong><span>model accuracy</span></div><div class="stat"><strong class="base-color">${Math.round(data.baseline.accuracy * 1000) / 10}%</strong><span>baseline accuracy</span></div><div class="stat"><strong>${data.model.false_negatives} / ${data.baseline.false_negatives}</strong><span>missed hazards: model / baseline</span></div></div></article>`;
+function resultRow(name, data) {
+  const percent = value => `${(value * 100).toFixed(1)}%`;
+  return `<tr><th scope="row">${name}</th><td>${percent(data.model.accuracy)}</td><td>${percent(data.baseline.accuracy)}</td><td>${data.model.false_negatives} / ${data.baseline.false_negatives}</td></tr>`;
 }
 
 function start() {
-  try {
-    if (!window.BENCHMARK_DATA) throw new Error("Could not load benchmark data");
-    model = window.BENCHMARK_DATA.model;
-    const results = window.BENCHMARK_DATA.results;
-    $("result-cards").innerHTML = card("Typical conditions", "1,200 HELD-OUT SCENARIOS", results.test) + card("Stress conditions", "1,200 HELD-OUT SCENARIOS", results.stress);
-    $("result-note").textContent = `At the default 50% threshold, the model misses ${results.test.model.false_negatives} hazards on the typical set and ${results.stress.model.false_negatives} on the stress set. Lowering the threshold to 25% cuts those counts to ${results.test.conservative_model.false_negatives} and ${results.stress.conservative_model.false_negatives}, with more false alarms. See results.json for the full confusion matrices.`;
-    inputs.forEach(id => $(id).addEventListener("input", update));
-    update();
-  } catch (error) {
-    $("model-call").textContent = "Could not load the model data. Run benchmark.py and reopen this page.";
-    $("result-cards").textContent = error.message;
+  if (!window.BENCHMARK_DATA) {
+    $("model-call").textContent = "Could not load data.js";
+    return;
   }
+  model = window.BENCHMARK_DATA.model;
+  const results = window.BENCHMARK_DATA.results;
+  $("result-rows").innerHTML = resultRow("Typical (1,200 cases)", results.test) + resultRow("Slippery road + slower reaction (1,200 cases)", results.stress);
+  $("result-note").textContent = `At the 50% cutoff, the model missed ${results.test.model.false_negatives} hazards in typical cases and ${results.stress.model.false_negatives} in stress cases. A 25% cutoff missed ${results.test.conservative_model.false_negatives} and ${results.stress.conservative_model.false_negatives} in these samples, but made more false alarms.`;
+  ["speed", "distance", "friction", "reaction"].forEach(id => $(id).addEventListener("input", update));
+  update();
 }
+
 start();
