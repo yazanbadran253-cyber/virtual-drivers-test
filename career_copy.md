@@ -1,10 +1,10 @@
 # Resume and LinkedIn copy
 
-Use these words only after you understand the code and can explain the model, baseline, split, and failure cases in an interview. Keep this in **Projects**, not Work Experience. Link to the GitHub repository and live demo when they are available.
+Use these words only after you understand the code and can explain the model, baseline, split, and failure cases in an interview. Keep this in **Projects**, not Work Experience. GitHub: <https://github.com/yazanbadran253-cyber/virtual-drivers-test>. The hosted demo is owner-only for now; share its link on a resume only if you later make it public.
 
 ## Resume: general ML / evaluation internship
 
-**Virtual Driver's Test — Braking-Risk Benchmark** | Python, machine learning, model evaluation, simulation | GitHub · Demo
+**Virtual Driver's Test — Braking-Risk Benchmark** | Python, machine learning, model evaluation, simulation | [GitHub](https://github.com/yazanbadran253-cyber/virtual-drivers-test)
 
 - Built a reproducible evaluation pipeline that generates 5,400 synthetic braking scenarios, trains a logistic regression model, and compares it with a fixed-rule baseline.
 - Measured 97.1% accuracy and 27 missed hazards on 1,200 held-out typical scenarios; stress-tested slippery-road / long-reaction cases and analyzed the false-negative versus false-alarm tradeoff.
@@ -23,7 +23,7 @@ Do **not** claim C++ proficiency based on this project. Waymo lists it as a requ
 
 ## LinkedIn Featured description
 
-> I built a small virtual driver's test to practice evaluating an ML model beyond average accuracy. It generates synthetic braking scenarios, compares a trained classifier with a fixed-rule baseline, and stress-tests both under slippery-road and slower-reaction conditions. The model reached 97.1% accuracy on 1,200 held-out typical scenarios, but still missed 27 hazards. The demo lets you change a scenario and inspect the model, baseline, and physics-derived label. This is an educational simulation, not a real driving safety system. [GitHub link] [Demo link]
+> I built a small virtual driver's test to practice evaluating an ML model beyond average accuracy. It generates synthetic braking scenarios, compares a trained classifier with a fixed-rule baseline, and stress-tests both under slippery-road and slower-reaction conditions. The model reached 97.1% accuracy on 1,200 held-out typical scenarios, but still missed 27 hazards. The demo lets you change a scenario and inspect the model, baseline, and physics-derived label. This is an educational simulation, not a real driving safety system. https://github.com/yazanbadran253-cyber/virtual-drivers-test
 
 ## Interview explanation in 30 seconds
 
